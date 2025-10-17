@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./color.js" defer></script>
+    <script src="./app.js" defer></script>
+    <title>To Do List</title>
+  </head>
+  <body>
+    <header>
+      <h1>TO DO LIST</h1>
+      <div id="color-picker">
+        <input type="color" class="color" id="color-1"></input>
+        <input type="color" class="color" id="color-2"></input>
+      </div>
+    </header>
+    <main>
+      <form action="" id="form">
+        <div id="input-div">
+          <input type="text" name="search" id="search"/>
+          <select name="search-category" id="search-category">
+            <option value="all">All Categories</option>
+            <option value="personal">Personal</option>
+            <option value="home">HOME</option>
+            <option value="work">Work</option>
+            <option value="shop">Shopping</option>
+          </select>
+          <div>
+            <input type="text" name="task" id="task" />
+            <select name="add-category" id="add-category">
+              <option value="home">HOME</option>
+              <option value="work">Work</option>
+              <option value="shop">Shopping</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="buttons">
+            <button id="search">Search</button>
+            <button id="filter">Filter</button>
+            <button id="add">Add Task</button>
+        </div>
+      </form>
+
+      <div id="container"></div>
+
+    </main>
+  </body>
+</html>
