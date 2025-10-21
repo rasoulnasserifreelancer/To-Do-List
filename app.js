@@ -1,8 +1,9 @@
 let formElement = document.getElementById("form");
 let mainElement = document.querySelector("main");
 let tableElement = createTabel(mainElement);
-let completed = false;
+let inputElement = document.createElement("input");
 
+showStorageContent(getStorageContent);
 
 formElement.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -12,13 +13,19 @@ formElement.addEventListener("submit", (e) => {
     let taskName = formData.get("task").toLowerCase();
     let taskCategory = formData.get("add-category").toLowerCase();
 
+    let completed = {
+      htmlElement: "input",
+      type: "checkbox",
+      innerText: "completed",
+      checked: false,
+    };
+
     if (!taskName) return;
     let taskId = 1;
     let numberOfItems = 0;
 
-    for (let i=0; i<localStorage.length; i++) {
-        if (!Number.isNaN(Number(localStorage.key(i)))) numberOfItems+=1;
-        console.log("items",numberOfItems);
+    for (let i = 0; i < localStorage.length; i++) {
+      if (!Number.isNaN(Number(localStorage.key(i)))) numberOfItems += 1;
     }
 
     taskId += numberOfItems;
@@ -29,6 +36,9 @@ formElement.addEventListener("submit", (e) => {
       taskCategory,
       completed,
     };
+
+    console.log(dataTable, "dataTable");
+    console.log(JSON.stringify(dataTable), "stringified");
 
     localStorage.setItem(taskId, JSON.stringify(dataTable));
     showStorageContent(getStorageContent);
@@ -48,7 +58,6 @@ formElement.addEventListener("submit", (e) => {
     if (!searchCategory) return;
     showStorageContent(() => filterStorageContent(searchCategory));
   }
-
 });
 
 function createTabel(container) {
@@ -68,10 +77,26 @@ function createTabel(container) {
 
 function addTableData(table, id, name, category, completed) {
   let tableRow = document.createElement("tr");
+
+  let inputElement = document.createElement("input");
+  inputElement.type = completed.type;
+  inputElement.checked = completed.checked;
+  inputElement.addEventListener("click", () =>
+    changeCompletionStateFunction(id, name, category, completed, tableRow)
+  );
+
   for (let i = 1; i < arguments.length; i++) {
     let tableData = document.createElement("td");
+    if (typeof arguments[i] === "object") {
+      tableData = inputElement;
+      tableRow.append(tableData);
+      break;
+    }
     tableData.innerText = arguments[i];
     tableRow.append(tableData);
+  }
+  if (inputElement.checked) {
+    tableRow.children[1].style.textDecoration = "line-through";
   }
   table.append(tableRow);
 }
@@ -84,7 +109,8 @@ function getStorageContent() {
       allStoredData.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
     }
   }
-  return allStoredData.sort( (task1, task2) => task1.taskId - task2.taskId );
+  console.log("all stored data : ", allStoredData);
+  return allStoredData.sort((task1, task2) => task1.taskId - task2.taskId);
 }
 
 function showStorageContent(contentFunction) {
@@ -103,19 +129,42 @@ function searchStorageContent(searchName) {
       desiredData.push(content);
     }
   }
-    return desiredData.sort( (task1, task2) => task1.taskId - task2.taskId );
+  return desiredData.sort((task1, task2) => task1.taskId - task2.taskId);
 }
-
 
 function filterStorageContent(searchCategory) {
   let allStoredData = getStorageContent();
   let desiredData = [];
-  if (searchCategory.toLowerCase() == "all") return allStoredData
+  if (searchCategory.toLowerCase() == "all") return allStoredData;
 
   for (let content of allStoredData) {
     if (content.taskCategory === searchCategory.toLowerCase()) {
       desiredData.push(content);
     }
   }
-    return desiredData.sort( (task1, task2) => task1.taskId - task2.taskId );
+  return desiredData.sort((task1, task2) => task1.taskId - task2.taskId);
+}
+
+function changeCompletionStateFunction(id, name, category, complete, row) {
+  complete.checked = !complete.checked;
+  console.log(complete);
+
+  if (complete.checked) {
+    row.children[1].style.textDecoration = "line-through";
+  } else {
+    row.children[1].style.textDecoration = "none";
+  }
+
+  let dataTable = {
+    id,
+    name,
+    category,
+    completed: {
+      htmlElement: "input",
+      type: "checkbox",
+      innerText: "completed",
+      checked: complete.checked,
+    },
+  };
+  localStorage.setItem(id, JSON.stringify(dataTable));
 }
