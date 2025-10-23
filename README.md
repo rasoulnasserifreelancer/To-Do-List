@@ -9,24 +9,17 @@ Works seamlessly across desktops, tablets, and mobile devices.
 - ➕ Add Tasks
 Quickly add tasks with a clean input field and button.
 - 🔍 Search Tasks
-Instantly find tasks using a real-time search bar.
+Instantly find tasks using a search input and button.
 - 🧹 Filter Tasks
-Toggle between all, completed, and pending tasks.
-📂 File Structure
-todo-list-app/
-├── index.html
-├── style.css
-├── script.js
-└── README.md
+Toggle between different categories.
 
 
 🚀 Getting Started
 1. Clone the Repository
 git clone https://github.com/rasoulnasserifreelancer/To-Do-List.git
+2.navigate into the project folder
 cd To-Do-List
-
-
-2. Open in Browser
+3. Open in Browser
 Simply open index.html in your preferred browser. No build tools or installations required.
 🛠️ Technologies Used
 - HTML5 – Structure
@@ -34,7 +27,11 @@ Simply open index.html in your preferred browser. No build tools or installation
 - JavaScript (ES6) – Logic and interactivity
 
 📸 Screenshots
-"./assets/to-do-app.png"
+![To-Do-List-App Screenshot](./assets/to-do-app.png)
+
+🌟 Live Demo
+👉 View on Vercel
+((https://to-do-list-app-beryl-seven.vercel.app/))
 
 📬 Contributing
 Pull requests are welcome! Feel free to fork the project and submit improvements.
