@@ -32,8 +32,9 @@ Simply open index.html in your preferred browser. No build tools or installation
 - HTML5 – Structure
 - CSS3 – Styling and responsiveness
 - JavaScript (ES6) – Logic and interactivity
+
 📸 Screenshots
-Add screenshots here to showcase the UI, color picker, and task management features.
+"./assets/to-do-app.png"
 
 📬 Contributing
 Pull requests are welcome! Feel free to fork the project and submit improvements.

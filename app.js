@@ -37,8 +37,6 @@ formElement.addEventListener("submit", (e) => {
       completed,
     };
 
-    console.log(dataTable, "dataTable");
-    console.log(JSON.stringify(dataTable), "stringified");
 
     localStorage.setItem(taskId, JSON.stringify(dataTable));
     showStorageContent(getStorageContent);
@@ -48,6 +46,7 @@ formElement.addEventListener("submit", (e) => {
     let searchName = formData.get("search");
 
     if (!searchName) return;
+    console.log(searchName)
     showStorageContent(() => searchStorageContent(searchName));
   }
 
@@ -109,13 +108,11 @@ function getStorageContent() {
       allStoredData.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
     }
   }
-  console.log("all stored data : ", allStoredData);
   return allStoredData.sort((task1, task2) => task1.taskId - task2.taskId);
 }
 
 function showStorageContent(contentFunction) {
   tableElement.innerHTML = "";
-  tableElement = createTabel(mainElement);
   for (let data of contentFunction()) {
     addTableData(tableElement, ...Object.values(data));
   }
@@ -125,10 +122,11 @@ function searchStorageContent(searchName) {
   let allStoredData = getStorageContent();
   let desiredData = [];
   for (let content of allStoredData) {
-    if (content.taskName === searchName.toLowerCase()) {
+    if (content.name === searchName.toLowerCase()) {
       desiredData.push(content);
     }
   }
+  console.log(desiredData)
   return desiredData.sort((task1, task2) => task1.taskId - task2.taskId);
 }
 
@@ -138,7 +136,7 @@ function filterStorageContent(searchCategory) {
   if (searchCategory.toLowerCase() == "all") return allStoredData;
 
   for (let content of allStoredData) {
-    if (content.taskCategory === searchCategory.toLowerCase()) {
+    if (content.category === searchCategory.toLowerCase()) {
       desiredData.push(content);
     }
   }
